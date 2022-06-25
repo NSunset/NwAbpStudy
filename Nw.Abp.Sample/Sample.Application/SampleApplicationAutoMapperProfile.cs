@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Sample.Application.UseService.Dtos;
 using Sample.Domain.Models;
+using Sample.IApplication.UseService.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

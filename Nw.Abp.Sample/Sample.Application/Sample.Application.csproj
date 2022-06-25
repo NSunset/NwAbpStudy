@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sample.EntityFrameworkCore\Sample.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Sample.IApplication\Sample.IApplication.csproj" />
+    <ProjectReference Include="..\Sample.Repositories\Sample.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

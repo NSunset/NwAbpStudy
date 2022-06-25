@@ -1,4 +1,6 @@
 ﻿using Sample.EntityFrameworkCore;
+using Sample.IApplication;
+using Sample.Repositories;
 using System;
 using Volo.Abp.Application;
 using Volo.Abp.AutoMapper;
@@ -8,7 +10,7 @@ namespace Sample.Application
 {
     [DependsOn(
         typeof(AbpDddApplicationModule),
-        typeof(SampleEntityFrameworkCoreModule),
+        typeof(SampleRepositoriesModule),
         typeof(AbpAutoMapperModule)
         )]
     public class SampleApplicationModule : AbpModule

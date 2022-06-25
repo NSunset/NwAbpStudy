@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sample.Application.UseService;
+using Sample.IApplication.UseService.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,31 @@ namespace Sample.HttpApi.Controllers
             _logger = logger;
         }
 
+
+        [Route("Get")]
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        //[Authorize]
+        [Authorize(Policy = "CustomPolicy")]
+        public IEnumerable<WeatherForecast> Get([FromQuery]LoginUserDto loginUser)
         {
+            throw new Exception("你好啊");
+            var rng = new Random();
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            })
+            .ToArray();
+        }
+
+        [Route("Add")]
+        [HttpPost]
+        //[Authorize]
+        [Authorize(Policy = "CustomPolicy")]
+        public IEnumerable<WeatherForecast> Add(LoginUserDto loginUser)
+        {
+            throw new Exception("你好啊");
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

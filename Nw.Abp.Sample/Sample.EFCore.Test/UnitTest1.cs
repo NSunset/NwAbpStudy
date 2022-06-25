@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using Sample.Common.JwtHelpers;
+using System.IO;
 
 namespace Sample.EFCore.Test
 {
@@ -13,7 +15,7 @@ namespace Sample.EFCore.Test
         [Test]
         public void Test1()
         {
-
+            RSAHelper.GenerateAndSaveKey(Directory.GetCurrentDirectory());
             Assert.Pass();
         }
     }

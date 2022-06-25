@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Sample.Application.UseService;
-using Sample.Application.UseService.Dtos;
-using Sample.Domain.Models;
+using Sample.IApplication.UseService;
+using Sample.IApplication.UseService.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +21,12 @@ namespace Sample.HttpApi.Controllers
             this.userAppService = userAppService;
         }
 
-        [Route("Login")]
-        [HttpPost]
-        public async Task<LoginUserDto> Login(string name,string pwd)
+        [Authorize]
+        [Route("CurrentUser")]
+        [HttpGet]
+        public async Task<LoginUserDto> GetLoginUser()
         {
-            return await userAppService.Login(name, pwd);
+            return await userAppService.GetLoginUserAsync();
         }
     }
 }

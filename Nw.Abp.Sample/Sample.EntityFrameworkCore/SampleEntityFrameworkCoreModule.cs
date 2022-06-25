@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Sample.Domain;
 using Sample.EntityFrameworkCore.Data;
 using System;
 using Volo.Abp.Data;
@@ -10,7 +11,8 @@ namespace Sample.EntityFrameworkCore
 {
     [DependsOn(
         typeof(AbpEntityFrameworkCoreModule),
-        typeof(AbpEntityFrameworkCoreMySQLModule)
+        typeof(AbpEntityFrameworkCoreMySQLModule),
+        typeof(SampleDomainModule)
         )]
     public class SampleEntityFrameworkCoreModule : AbpModule
     {

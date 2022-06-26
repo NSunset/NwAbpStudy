@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Sample.IApplication.UseService;
-using Sample.IApplication.UseService.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using Sample.IApplication.AuthCenter;
+using Sample.IApplication.AuthCenter.Dtos;
 using System.Threading.Tasks;
 
 namespace Sample.AuthCenterApi.Controllers
@@ -13,9 +9,9 @@ namespace Sample.AuthCenterApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserAppService userAppService;
+        private readonly IAuthUserAppService userAppService;
 
-        public UserController(IUserAppService userAppService)
+        public UserController(IAuthUserAppService userAppService)
         {
             this.userAppService = userAppService;
         }

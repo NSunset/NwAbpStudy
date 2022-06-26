@@ -10,8 +10,6 @@ namespace Sample.IApplication.UseService
 {
     public interface IUserAppService : IApplicationService
     {
-        Task<LoginResultDto> LoginAsync(LoginInputDto loginInput);
-
         Task<LoginUserDto> GetLoginUserAsync();
     }
 }

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EventBus.Abstractions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Sample.Common;
 using Sample.Common.JwtHelpers;
 using Sample.Common.JwtHelpers.IServices;
 using Sample.Domain.Models;
+using Sample.Domain.Users.Events;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,18 +23,18 @@ namespace Sample.Domain.Users
 {
     public class UserManager : IUserManager, ITransientDependency
     {
-        private readonly IJwtService jwtService;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IRepository<User> userRepository;
+        private readonly IEventBus eventBus;
 
-        public UserManager(IJwtService jwtService
-            , IHttpContextAccessor httpContextAccessor
+        public UserManager(IHttpContextAccessor httpContextAccessor
             , IRepository<User> userRepository
+            , IEventBus eventBus
             )
         {
-            this.jwtService = jwtService;
             this.httpContextAccessor = httpContextAccessor;
             this.userRepository = userRepository;
+            this.eventBus = eventBus;
         }
 
         public async Task<User> GetLoginUserAsync()
@@ -45,12 +47,11 @@ namespace Sample.Domain.Users
                 throw new UserException("未找到登录用户信息，请通知后台检查");
             }
             int uid = Convert.ToInt32(userId);
-            return await userRepository.FindAsync(u => u.Id == uid);
-        }
 
-        public JwtTokenModel GetToken(IEnumerable<Claim> claims)
-        {
-            return jwtService.GetToken(claims);
+
+            eventBus.Publish(new SendShortMessageEvent(uid));
+
+            return await userRepository.FindAsync(u => u.Id == uid);
         }
     }
 }

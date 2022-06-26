@@ -1,4 +1,7 @@
-﻿using Sample.EntityFrameworkCore;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sample.Common.JwtHelpers.IServices;
+using Sample.Common.JwtHelpers.Services;
+using Sample.EntityFrameworkCore;
 using Sample.IApplication;
 using Sample.Repositories;
 using System;
@@ -21,6 +24,8 @@ namespace Sample.Application
             {
                 options.AddProfile<SampleApplicationAutoMapperProfile>();
             });
+
+            context.Services.AddTransient<IJwtService, DefaultRsJwtService>();
         }
     }
 }

@@ -11,8 +11,6 @@ namespace Sample.Domain.Users
 {
     public interface IUserManager
     {
-        JwtTokenModel GetToken(IEnumerable<Claim> claims);
-
         Task<User> GetLoginUserAsync();
     }
 }

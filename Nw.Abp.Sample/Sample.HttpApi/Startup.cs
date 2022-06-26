@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp;
 
 namespace Sample.HttpApi
 {
@@ -27,7 +28,10 @@ namespace Sample.HttpApi
         public void ConfigureServices(IServiceCollection services)
         {
             SampleHttpApiModule.Configuration = Configuration;
-            services.AddApplication<SampleHttpApiModule>();
+            services.AddApplication<SampleHttpApiModule>(options =>
+            {
+                //options.UseAutofac();
+            });
 
 
         }

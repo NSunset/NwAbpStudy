@@ -22,10 +22,11 @@ namespace Sample.HttpApi
             {
                 builder.AddLog4Net("Log4net.config");
             })
+                .UseAutofac()
             .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .UseAutofac();
+            ;
     }
 }

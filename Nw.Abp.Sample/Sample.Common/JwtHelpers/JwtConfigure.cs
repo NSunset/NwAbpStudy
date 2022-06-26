@@ -8,6 +8,8 @@ namespace Sample.Common.JwtHelpers
 {
     public class JwtConfigure
     {
+        public const string AppKey = "JwtConfigure";
+
         public string Key { get; set; }
 
         public string IssUser { get; set; }

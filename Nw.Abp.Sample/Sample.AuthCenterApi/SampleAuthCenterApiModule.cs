@@ -40,7 +40,9 @@ namespace Sample.AuthCenterApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample.AuthCenterApi", Version = "v1" });
             });
 
-            services.Configure<JwtConfigure>(Configuration.GetSection("JwtConfigure"));
+            services.AddJwtConfig(Configuration);
+
+
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

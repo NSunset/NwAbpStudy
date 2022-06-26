@@ -18,12 +18,10 @@ namespace Sample.Application.UseService
 {
     public class UserAppService : ApplicationService, IUserAppService
     {
-        private readonly IRepository<User> userRepository;
         private readonly IUserManager userManager;
 
-        public UserAppService(IRepository<User> userRepository, IUserManager userManager)
+        public UserAppService(IUserManager userManager)
         {
-            this.userRepository = userRepository;
             this.userManager = userManager;
         }
 
@@ -32,20 +30,6 @@ namespace Sample.Application.UseService
             var user = await userManager.GetLoginUserAsync();
             var dto = ObjectMapper.Map<User, LoginUserDto>(user);
             return dto;
-        }
-
-        public async Task<LoginResultDto> LoginAsync(LoginInputDto loginInput)
-        {
-            User user = await userRepository.AsNoTracking().SingleOrDefaultAsync(a => a.Name == loginInput.Name && a.Password == loginInput.Pwd);
-
-            if (user == null)
-                throw new UserException("登录失败,输入用户不存在");
-            JwtTokenModel tokenModel = userManager.GetToken(user.GetClaims());
-
-            return new LoginResultDto
-            {
-                Token = tokenModel.Token
-            };
         }
     }
 }

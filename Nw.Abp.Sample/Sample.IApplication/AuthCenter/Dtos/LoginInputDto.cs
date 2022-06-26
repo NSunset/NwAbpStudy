@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
-namespace Sample.IApplication.UseService.Dtos
+namespace Sample.IApplication.AuthCenter.Dtos
 {
     public class LoginInputDto
     {

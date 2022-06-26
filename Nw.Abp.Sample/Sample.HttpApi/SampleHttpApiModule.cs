@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Autofac;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,11 +7,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using RedisHelper.Interface;
+using RedisHelper.Service;
 using Sample.Application;
 using Sample.Common;
 using Sample.Common.JwtHelpers;
 using Sample.Common.Middleware;
+using Sample.Common.Redis;
 using Sample.HttpApi.Unitily;
+using Sample.HttpApi.Unitily.Expand;
 using Sample.IApplication;
 using System;
 using System.Collections.Generic;
@@ -47,11 +52,12 @@ namespace Sample.HttpApi
 
 
             JwtConfigure jwtConfigure = new JwtConfigure();
-            Configuration.GetSection("JwtConfigure").Bind(jwtConfigure);
+            Configuration.GetSection(JwtConfigure.AppKey).Bind(jwtConfigure);
 
+            //使用JWT认证权限
             services.AddRSJwtAuthentication(jwtConfigure);
 
-
+            #region 自定义授权逻辑策略
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("CustomPolicy", policy =>
@@ -61,6 +67,21 @@ namespace Sample.HttpApi
             });
 
             services.AddSingleton<IAuthorizationHandler, CustomNameAuthorizationHandler>();
+            #endregion
+
+            #region 添加配置文件对象到容器
+            services.AddRedisConfig(Configuration);
+            services.AddRabbitMQConfig(Configuration);
+            #endregion
+
+
+            #region 注册服务到容器
+            services.AddRedisService();
+
+            ContainerBuilder containerBuilder = services.GetContainerBuilder();
+            containerBuilder.RegisterService();
+
+            #endregion
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -89,6 +110,8 @@ namespace Sample.HttpApi
                 endpoints.MapControllers();
             });
 
+            //初始化RabbitMQ消费端
+            app.Subscribe();
             //base.OnApplicationInitialization(context);
         }
     }

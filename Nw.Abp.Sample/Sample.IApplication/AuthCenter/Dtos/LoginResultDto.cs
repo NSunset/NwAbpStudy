@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sample.IApplication.UseService.Dtos
+namespace Sample.IApplication.AuthCenter.Dtos
 {
     public class LoginResultDto
     {

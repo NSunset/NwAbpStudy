@@ -14,7 +14,6 @@ namespace Sample.Domain
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            context.Services.AddTransient<IJwtService, DefaultRsJwtService>();
         }
     }
 }

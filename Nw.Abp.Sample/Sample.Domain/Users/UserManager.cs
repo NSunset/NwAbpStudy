@@ -40,7 +40,7 @@ namespace Sample.Domain.Users
         public async Task<User> GetLoginUserAsync()
         {
             var userId = httpContextAccessor.HttpContext?.User?.Claims?
-                .SingleOrDefault(a => a.Type == "CurrentId")?.Value;
+                .SingleOrDefault(a => a.Type == nameof(User.Id))?.Value;
 
             if (userId == null)
             {

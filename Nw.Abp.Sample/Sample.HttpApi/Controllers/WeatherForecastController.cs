@@ -30,7 +30,7 @@ namespace Sample.HttpApi.Controllers
         [Route("Get")]
         [HttpGet]
         //[Authorize]
-        [Authorize(Policy = "CustomPolicy")]
+        //[Authorize(Policy = "CustomPolicy")]
         public IEnumerable<WeatherForecast> Get([FromQuery]LoginUserDto loginUser)
         {
             throw new Exception("你好啊");
@@ -47,7 +47,7 @@ namespace Sample.HttpApi.Controllers
         [Route("Add")]
         [HttpPost]
         //[Authorize]
-        [Authorize(Policy = "CustomPolicy")]
+        //[Authorize(Policy = "CustomPolicy")]
         public IEnumerable<WeatherForecast> Add(LoginUserDto loginUser)
         {
             throw new Exception("你好啊");

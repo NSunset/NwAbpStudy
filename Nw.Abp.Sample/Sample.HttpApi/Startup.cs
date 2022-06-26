@@ -28,10 +28,7 @@ namespace Sample.HttpApi
         public void ConfigureServices(IServiceCollection services)
         {
             SampleHttpApiModule.Configuration = Configuration;
-            services.AddApplication<SampleHttpApiModule>(options =>
-            {
-                //options.UseAutofac();
-            });
+            services.AddApplication<SampleHttpApiModule>();
 
 
         }

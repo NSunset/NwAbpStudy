@@ -20,7 +20,7 @@ namespace Sample.Domain.Models
             return new List<Claim>
             {
                 new Claim(ClaimTypes.Name,Name),
-                new Claim("CurrentId",Id.ToString())
+                new Claim(nameof(Id),Id.ToString())
             };
         }
     }

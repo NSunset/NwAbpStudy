@@ -1,26 +1,16 @@
-﻿using Autofac;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using RedisHelper.Interface;
-using RedisHelper.Service;
 using Sample.Application;
 using Sample.Common;
 using Sample.Common.JwtHelpers;
 using Sample.Common.Middleware;
-using Sample.Common.Redis;
+using Sample.Domain.Expand;
 using Sample.HttpApi.Unitily;
-using Sample.HttpApi.Unitily.Expand;
-using Sample.IApplication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.AspNetCore;
 using Volo.Abp.Autofac;
@@ -70,18 +60,16 @@ namespace Sample.HttpApi
             #endregion
 
             #region 添加配置文件对象到容器
+            //redis
             services.AddRedisConfig(Configuration);
+
+            //rabbitmq
             services.AddRabbitMQConfig(Configuration);
             #endregion
 
 
-            #region 注册服务到容器
+            //注册redis服务到容器
             services.AddRedisService();
-
-            ContainerBuilder containerBuilder = services.GetContainerBuilder();
-            containerBuilder.RegisterService();
-
-            #endregion
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -112,7 +100,6 @@ namespace Sample.HttpApi
 
             //初始化RabbitMQ消费端
             app.Subscribe();
-            //base.OnApplicationInitialization(context);
         }
     }
 }

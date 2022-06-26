@@ -10,15 +10,16 @@ using Sample.Domain.Users.EventHandlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Sample.HttpApi.Unitily.Expand
+namespace Sample.Domain.Expand
 {
     public static class ContainerBuilderExpand
     {
         public static ContainerBuilder RegisterService(this ContainerBuilder builder)
         {
-            #region RabbitMQ服务注入到容器
+            #region 事件总线RabbitMQ注入到容器
             builder.RegisterType<InMemoryEventBusSubscriptionsManager>().As<IEventBusSubscriptionsManager>().SingleInstance();
 
             builder.Register<IRabbitMQPersistentConnection>(context =>
@@ -64,9 +65,10 @@ namespace Sample.HttpApi.Unitily.Expand
                     rabbitMQConfigure.RetryCount
                     );
             }).SingleInstance();
-
-            builder.RegisterType<SendShortMessageEventHandler>();
             #endregion
+
+            //注册具体的事件处理对象
+            builder.RegisterType<SendShortMessageEventHandler>();
 
             return builder;
         }
